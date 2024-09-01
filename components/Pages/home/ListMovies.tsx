@@ -11,6 +11,7 @@ export const ListMovies = (props: Props) => {
   const { films, isLoading, setFilms, setLoading, keyword } = useFilm();
   const [page, setPage] = useState<string>("1");
   const [total_page, setTotal_page] = useState<number>(0);
+  const [firstFetch, setFirstFetch] = useState(true);
 
   const getMovies = async (onPage?: string, resetFilms: boolean = false) => {
     setLoading(true);
@@ -45,6 +46,8 @@ export const ListMovies = (props: Props) => {
       console.error(error);
       setLoading(false);
     }
+
+    setFirstFetch(false);
   };
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export const ListMovies = (props: Props) => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && firstFetch ? (
         <p>Loading ...</p>
       ) : (
         <>
